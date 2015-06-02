@@ -174,6 +174,21 @@ NSString *const kDDDKeychainWrapperErrorDomain = @"DDDKeychainWrapperErrorDomain
     }
 }
 
+#pragma mark - Delete Keychain Item
+
++ (BOOL)deleteKeychainValueForIdentifier:(NSString *)identifier error:(NSError **)error
+{
+    NSMutableDictionary *searchDictionary = [self newSearchDictionary:identifier];
+    OSStatus status = SecItemDelete((__bridge CFDictionaryRef)searchDictionary);
+    
+    if (status == errSecSuccess) {
+        return YES;
+    }
+    
+    [self keychainError:error forStatus:status domain:DDDKeychainWrapperErrorDeletingKeychainValue];
+    return NO;
+}
+
 
 #pragma mark - Private
 
@@ -281,19 +296,6 @@ NSString *const kDDDKeychainWrapperErrorDomain = @"DDDKeychainWrapperErrorDomain
     }
     
     [self keychainError:error forStatus:status domain:DDDKeychainWrapperErrorUpdatingKeychainValue];
-    return NO;
-}
-
-+ (BOOL)deleteKeychainValueForIdentifier:(NSString *)identifier error:(NSError **)error
-{
-    NSMutableDictionary *searchDictionary = [self newSearchDictionary:identifier];
-    OSStatus status = SecItemDelete((__bridge CFDictionaryRef)searchDictionary);
-    
-    if (status == errSecSuccess) {
-        return YES;
-    }
-    
-    [self keychainError:error forStatus:status domain:DDDKeychainWrapperErrorDeletingKeychainValue];
     return NO;
 }
 
