@@ -55,6 +55,9 @@ NSString *const kDDDKeychainWrapperErrorDomain = @"DDDKeychainWrapperErrorDomain
 + (NSDate *)dateForKey:(NSString *)key
 {
     NSData *dateData = [self dataForIdentifier:key];
+    if(!dateData){
+        return nil;
+    }
     return (NSDate *)[NSKeyedUnarchiver unarchiveObjectWithData:dateData];
 }
 
@@ -87,6 +90,9 @@ NSString *const kDDDKeychainWrapperErrorDomain = @"DDDKeychainWrapperErrorDomain
 + (NSArray *)arrayForKey:(NSString *)key
 {
     NSData *arrayData = [self dataForIdentifier:key];
+    if(!arrayData){
+        return nil;
+    }
     return (NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:arrayData];
 }
 
@@ -107,6 +113,9 @@ NSString *const kDDDKeychainWrapperErrorDomain = @"DDDKeychainWrapperErrorDomain
 + (NSDictionary *)dictionaryForKey:(NSString *)key
 {
     NSData *dictionaryData = [self dataForIdentifier:key];
+    if(!dictionaryData){
+        return nil;
+    }
     return (NSDictionary *)[NSKeyedUnarchiver unarchiveObjectWithData:dictionaryData];
 }
 
@@ -122,6 +131,9 @@ NSString *const kDDDKeychainWrapperErrorDomain = @"DDDKeychainWrapperErrorDomain
 + (NSNumber *)numberForKey:(NSString *)key
 {
     NSData *numberData = [self dataForIdentifier:key];
+    if(!numberData){
+        return nil;
+    }
     return (NSNumber *)[NSKeyedUnarchiver unarchiveObjectWithData:numberData];
 }
 
@@ -154,6 +166,9 @@ NSString *const kDDDKeychainWrapperErrorDomain = @"DDDKeychainWrapperErrorDomain
 + (id)objectForKey:(NSString *)key
 {
     NSData *objectData = [self dataForIdentifier:key];
+    if(!objectData){
+        return nil;
+    }
     return (id)[NSKeyedUnarchiver unarchiveObjectWithData:objectData];
 }
 
@@ -368,8 +383,8 @@ NSString *const kDDDKeychainWrapperErrorDomain = @"DDDKeychainWrapperErrorDomain
     }
     
     *error = [NSError errorWithDomain:kDDDKeychainWrapperErrorDomain
-                               code:domain
-                           userInfo:@{NSLocalizedDescriptionKey: errorString}];
+                                 code:domain
+                             userInfo:@{NSLocalizedDescriptionKey: errorString}];
 }
 
 @end
