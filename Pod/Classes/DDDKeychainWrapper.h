@@ -43,5 +43,7 @@
 
 + (void)wipeKeychain;
 
++ (BOOL)deleteKeychainValueForIdentifier:(NSString *)identifier error:(NSError **)error;
+
 @end
 
